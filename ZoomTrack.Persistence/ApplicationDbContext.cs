@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ZoomTrack.Domain.Entities;
+using ZoomTrack.Domain.Shared;
 
 namespace ZoomTrack.Persistence;
 
@@ -17,16 +17,17 @@ public class ApplicationDbContext: DbContext
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
-        foreach (var entry in ChangeTracker.Entries<Entity>())
+        foreach (var entry in ChangeTracker.Entries<BaseEntity>())
         {
             switch (entry.State)
             {
+                /*
                 case EntityState.Added:
                     entry.Entity.CreatedAtUtc = DateTime.UtcNow;
                     break;
                 case EntityState.Modified:
                     entry.Entity.UpdatedAtUtc = DateTime.UtcNow;
-                    break;
+                    break; */
             }
         }
         return base.SaveChangesAsync(cancellationToken);

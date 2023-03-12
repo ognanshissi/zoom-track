@@ -1,16 +1,17 @@
-﻿namespace ZoomTrack.Domain.Entities;
+﻿using ZoomTrack.Domain.Shared;
 
-public class Track: Entity
+namespace ZoomTrack.Domain.Entities;
+
+public sealed class Track : BaseEntity
 {
 
-    internal Track(string title, string? description, DateTime releasedAtUtc, string trackUrl)
+    public Track(Guid id, string title, string? description, DateTime releasedAtUtc, string trackUrl)
+        : base(id)
     {
-        Id = Guid.NewGuid();
         Title = title;
         Description = description;
-        ReleasedAtUtc =  releasedAtUtc;
+        ReleasedAtUtc = releasedAtUtc;
         TrackUrl = trackUrl;
-        CreatedAtUtc = DateTime.UtcNow;
     }
 
     public string Title { get; set; }
@@ -21,17 +22,17 @@ public class Track: Entity
 
     public string TrackUrl { get; set; }
 
-    public Author Author { get; set; }
+    public Guid AuthorId { get; set; }
 
     public DateTime ReleasedAtUtc { get; set; }
 
 
-    public void Create(string title, string? description, DateTime releasedAtUtc, string trackUrl, string thumbnailImageUrl, Author author)
+    public Track Create(Guid id, string title, string? description, DateTime releasedAtUtc, string trackUrl, string thumbnailImageUrl, Author author)
     {
 
-        var track = new Track(title, description, releasedAtUtc, trackUrl);
+        var track = new Track(id, title, description, releasedAtUtc, trackUrl);
 
-
+        return track;
 
     }
 
